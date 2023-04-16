@@ -34,14 +34,16 @@ public class Cat : MonoBehaviour
 
     private void OnReactionApply(CatActionConfig action)
     {
-        //var newMood = reaction.Mood;
         var reaction = stateMaschine.SwichState(action, _currentMood);
         if (reaction == null) return;
-        if (reaction.Mood == null) return;
+        //        if (reaction.Mood == null) return; //Была ошибка, если настроение не изменилось
 
-        _currentMood = reaction.Mood;
+        if (reaction.Mood != null)
+        {
+            _currentMood = reaction.Mood;
+            _view.UpdateMood(_currentMood);
+        }
 
-        _view.UpdateMood(_currentMood);
         _view.UpdateReaction(reaction);
     }
 
